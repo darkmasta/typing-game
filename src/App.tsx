@@ -1,7 +1,12 @@
 import React from "react";
+import Typer from "./components/Typer";
 
 const App = () => {
-  return <div>Hello</div>;
+  return (
+    <>
+      <Typer />
+    </>
+  );
 };
 
 export default App;
