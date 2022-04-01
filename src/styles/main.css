@@ -1,3 +1,9 @@
+body {
+  font-family: "Roboto Mono", monospace;
+  background-color: #323437;
+  color: #d1d0c5;
+}
+
 .container {
   width: 100%;
   height: 100vh;
@@ -12,15 +18,32 @@
   height: 100px;
 }
 
-.green {
-  background-color: green;
+.correct {
+  /* background-color: #e2f7e2; */
+  color: #d1d0c5;
 }
 
-.red {
-  background-color: red;
+.wrong {
+  background-color: #ca4754;
 }
 
 .text-quote {
   font-size: 2.5rem;
   font-weight: bold;
+  color: #646669;
+  text-align: center;
+}
+
+.cursor {
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  animation: blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }

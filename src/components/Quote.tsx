@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const QuoteContainer = styled.div`
-  margin-bottom: 100px;
+  margin-bottom: 70px;
+  max-width: 1200px;
 `;
 
 interface Quote {
@@ -14,11 +15,19 @@ const Quote: React.FC<Quote> = ({ quote, userText }) => {
   const renderQuote = (): JSX.Element[] => {
     return quote.split("").map((letter, index) => {
       if (userText[index] === letter) {
-        return (
-          <span key={index} className="green">
-            {letter}
-          </span>
-        );
+        if (userText.length == index + 1) {
+          return (
+            <span key={index} className="correct cursor">
+              {letter}
+            </span>
+          );
+        } else {
+          return (
+            <span key={index} className="correct">
+              {letter}
+            </span>
+          );
+        }
       } else if (userText[index] === undefined) {
         return (
           <span key={index} className="white">
@@ -26,18 +35,22 @@ const Quote: React.FC<Quote> = ({ quote, userText }) => {
           </span>
         );
       } else {
-        return (
-          <span key={index} className="red">
-            {letter}
-          </span>
-        );
+        if (userText.length == index + 1) {
+          return (
+            <span key={index} className="wrong cursor">
+              {letter}
+            </span>
+          );
+        } else {
+          return (
+            <span key={index} className="wrong">
+              {letter}
+            </span>
+          );
+        }
       }
     });
   };
-
-  useEffect(() => {
-    console.log(userText);
-  }, [userText]);
 
   return <QuoteContainer>{renderQuote()}</QuoteContainer>;
 };
