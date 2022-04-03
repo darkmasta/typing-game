@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Quote from "./Quote";
 import StartButton from "./StartButton";
 import styled from "styled-components";
@@ -23,6 +23,8 @@ const Typer: React.FC = () => {
   );
   const [auther, setAuther] = useState<string>("Abraham Lincoln");
   const [userText, setUserText] = useState<string[]>([]);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const finishedButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleKeyPress = (e: string): void => {
     setUserText(e.split(""));
@@ -37,14 +39,16 @@ const Typer: React.FC = () => {
         setQuote(data.content);
         setUserText([]);
         setAuther(data.author);
+        setIsStarted(true);
+        inputRef.current?.focus();
       });
   };
 
   useEffect(() => {
     if (userText.length == quote.length) {
       setIsStarted(false);
-      console.log("game ended");
-      console.log(isStarted);
+      finishedButtonRef.current?.focus();
+      // console.log("game ended");
     }
   }, [userText]);
 
@@ -59,6 +63,8 @@ const Typer: React.FC = () => {
       <div className="text">
         <textarea
           id="input-text"
+          autoFocus
+          ref={inputRef}
           name="input-text"
           value={userText.join("")}
           onChange={(e) => handleKeyPress(e.currentTarget.value)}
@@ -66,17 +72,19 @@ const Typer: React.FC = () => {
       </div>
       <div className="row">
         <Button onClick={fetchNewQuote}>New Quote</Button>
-        {/* {isStarted && <Button onClick={fetchNewQuote}>New Quote</Button>}
+
+        {/* {isStarted && <Button onClick={fetchNewQuote}>New Quote</Button>} */}
         {!isStarted && (
           <Button
             onClick={() => {
               setIsStarted(false);
               fetchNewQuote();
             }}
+            ref={finishedButtonRef}
           >
             Finished
           </Button>
-        )} */}
+        )}
       </div>
     </div>
   );

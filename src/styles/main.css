@@ -16,6 +16,7 @@ body {
 #input-text {
   width: 600px;
   height: 100px;
+  opacity: 0;
 }
 
 .correct {
