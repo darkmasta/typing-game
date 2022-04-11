@@ -40,6 +40,15 @@ body {
   animation: blinkTextCursor 500ms steps(44) infinite normal;
 }
 
+.start-typing {
+  margin-top: 50px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #646669;
+  text-align: center;
+  animation: blinkTextCursor 1000ms steps(44) infinite normal;
+}
+
 @keyframes blinkTextCursor {
   from {
     border-right-color: rgba(255, 255, 255, 0.75);

@@ -59,6 +59,10 @@ const Typer: React.FC = () => {
         <div>
           ---- <i>{auther}</i>
         </div>
+        {/* {inputRef.current?.focus() && (
+          <div className="start-typing">Start typing...</div>
+        )} */}
+        <div className="start-typing">Start typing...</div>
       </div>
       <div className="text">
         <textarea
