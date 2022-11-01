@@ -25,11 +25,12 @@ body {
 }
 
 .wrong {
+  /*color: #ca3e47;*/
   background-color: #ca4754;
 }
 
 .text-quote {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #646669;
   text-align: center;
@@ -38,6 +39,11 @@ body {
 .cursor {
   border-right: 2px solid rgba(255, 255, 255, 0.75);
   animation: blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+.cursor-left {
+  border-left: 2px solid rgba(255, 255, 255, 0.75);
+  animation: blinkTextCursorLeft 500ms steps(44) infinite normal;
 }
 
 .start-typing {
@@ -55,5 +61,14 @@ body {
   }
   to {
     border-right-color: transparent;
+  }
+}
+
+@keyframes blinkTextCursorLeft {
+  from {
+    border-left-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-left-color: transparent;
   }
 }

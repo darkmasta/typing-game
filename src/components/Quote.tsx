@@ -13,11 +13,18 @@ interface Quote {
 
 const Quote: React.FC<Quote> = ({ quote, userText }) => {
   const renderQuote = (): JSX.Element[] => {
-    return quote.split("").map((letter, index) => {
+    return quote.split("").map((letter: string, index: number) => {
+      if (userText.length === 0 && index === 0) {
+        return  (
+        <span key={index} className={`white cursor-left`}>
+              {letter}
+        </span>
+        )
+      }
       if (userText[index] === letter) {
         if (userText.length == index + 1) {
           return (
-            <span key={index} className="correct cursor">
+            <span key={index} className={`correct cursor ${userText.length === 0 ? 'cursor-left': ''}`}>
               {letter}
             </span>
           );
