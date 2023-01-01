@@ -1,37 +1,30 @@
 {
-  "name": "typing-game-react-typescript",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "typing-game-next",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "webpack serve --port 5000",
-    "build": "NODE_ENV=production webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
-    "css-loader": "^6.7.1",
-    "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.6.0",
-    "ts-loader": "^9.2.8",
-    "typescript": "^4.6.3",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@types/styled-components": "^5.1.24",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
     "@use-it/event-listener": "^0.1.7",
-    "react": "^17.0.2",
+    "eslint-config-next": "^13.0.2",
+    "next": "^13.0.2",
+    "react": "^18.2.0",
     "react-custom-events": "^1.1.1",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.8",
+    "react-dom": "^18.2.0",
     "react-timer-hook": "^3.0.5",
-    "redux": "^4.1.2",
-    "styled-components": "^5.3.5"
+    "typescript": "4.8.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "prettier": "2.7.1",
+    "tailwindcss": "^3.2.1"
   }
 }
