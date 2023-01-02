@@ -1,0 +1,74 @@
+.main-container {
+    font-family: "Roboto Mono", monospace;
+    background-color: #323437;
+    color: #d1d0c5;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#input-text {
+    width: 600px;
+    height: 100px;
+    opacity: 0;
+}
+
+.correct {
+    /* background-color: #e2f7e2; */
+    color: #d1d0c5;
+}
+
+.wrong {
+    /*color: #ca3e47;*/
+    background-color: #ca4754;
+}
+
+.text-quote {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #646669;
+    text-align: center;
+}
+
+.cursor {
+    border-right: 2px solid rgba(255, 255, 255, 0.75);
+    animation: blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+.cursor-left {
+    border-left: 2px solid rgba(255, 255, 255, 0.75);
+    animation: blinkTextCursorLeft 500ms steps(44) infinite normal;
+}
+
+.start-typing {
+    margin-top: 50px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #646669;
+    text-align: center;
+    animation: blinkTextCursor 1000ms steps(44) infinite normal;
+}
+
+@keyframes blinkTextCursor {
+    from {
+        border-right-color: rgba(255, 255, 255, 0.75);
+    }
+    to {
+        border-right-color: transparent;
+    }
+}
+
+@keyframes blinkTextCursorLeft {
+    from {
+        border-left-color: rgba(255, 255, 255, 0.75);
+    }
+    to {
+        border-left-color: transparent;
+    }
+}
