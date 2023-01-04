@@ -19,7 +19,14 @@ const Timer: React.FC<any> = ({ expiryTimestamp = time, isStartedData }) => {
     restart,
     isStarted,
     setIsStarted,
-  }: any = useTyperContext({});
+  }: any = useTyperContext({
+    setIsStarted: function (
+      value: boolean | ((prevState: boolean) => boolean)
+    ): void {
+      throw new Error("Function not implemented.");
+    },
+    isStarted: false,
+  });
 
   const firstRender = useRef(true);
 

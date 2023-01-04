@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import useTyper from "../../hooks/useTyper";
 
-const TyperContext = createContext(null);
+const TyperContext = createContext<any>(null);
 
 // @ts-ignore
 export function TyperProvider({ children }) {
@@ -15,9 +15,6 @@ export function TyperProvider({ children }) {
   );
 }
 
-export function useTyperContext(p: {
-  setIsStarted: (value: ((prevState: boolean) => boolean) | boolean) => void;
-  isStarted: boolean;
-}) {
+export function useTyperContext(p: {}) {
   return useContext(TyperContext);
 }
