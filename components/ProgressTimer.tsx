@@ -2,8 +2,7 @@ import { useTyperContext } from "./context/typer_context";
 import { useEffect } from "react";
 
 const ProgressTimer = () => {
-  // @ts-ignore
-  const { timePast }: any = useTyperContext({});
+  const { timePast } = useTyperContext({});
   console.log(timePast);
 
   return (

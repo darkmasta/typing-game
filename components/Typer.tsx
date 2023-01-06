@@ -96,17 +96,6 @@ const Typer: React.FC = () => {
     }
 
     // callculate words per minute
-    let allTypedEntries = userText.length / 5;
-
-    console.log(allTypedEntries);
-    console.log(timePast);
-
-    if (isNaN(wpm)) {
-      setWpm(0);
-    }
-    if (timePast > 0) {
-      setWpm(Math.round(allTypedEntries / (timePast / 60)));
-    }
 
     if (userText.length >= quote.length) {
       setIsStarted(false);
@@ -114,7 +103,21 @@ const Typer: React.FC = () => {
       finishedButtonRef.current?.focus();
       //console.log("game ended");
     }
-  }, [userText, timePast]);
+  }, [userText]);
+
+  useEffect(() => {
+    let allTypedEntries = userText.length / 5;
+
+    if (isNaN(wpm)) {
+      setWpm(0);
+    }
+
+    console.log(allTypedEntries);
+
+    if (timePast > 0) {
+      setWpm(Math.round(allTypedEntries / (timePast / 60)));
+    }
+  }, [timePast]);
 
   return (
     <div className="container">
