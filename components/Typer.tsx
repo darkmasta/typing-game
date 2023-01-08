@@ -101,18 +101,22 @@ const Typer: React.FC = () => {
       setIsStarted(false);
       setTimer(false);
       finishedButtonRef.current?.focus();
+      setTotalTypedCharacters(Math.round(userText.length / 5));
       //console.log("game ended");
     }
   }, [userText]);
 
+  const [totalTypedCharacters, setTotalTypedCharacters] = useState<number>(0);
+
   useEffect(() => {
-    let allTypedEntries = userText.length / 5;
+    let allTypedEntries = totalTypedCharacters + userText.length / 5;
 
     if (isNaN(wpm)) {
       setWpm(0);
     }
 
     console.log(allTypedEntries);
+    console.log(timePast);
 
     if (timePast > 0) {
       setWpm(Math.round(allTypedEntries / (timePast / 60)));
