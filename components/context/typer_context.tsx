@@ -1,13 +1,15 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, ReactNode } from "react";
 import useTyper from "../../hooks/useTyper";
 
 const TyperContext = createContext<any>(null);
 
-// @ts-ignore
-export function TyperProvider({ children }) {
+interface TyperProviderProps {
+    children: ReactNode;
+}
+
+export function TyperProvider({ children } : TyperProviderProps) {
   const sharedState: null | any = useTyper({});
 
-  // @ts-ignore
   return (
     <TyperContext.Provider value={sharedState}>
       {children}

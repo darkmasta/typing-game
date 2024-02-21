@@ -124,7 +124,7 @@ const Typer: React.FC = () => {
   }, [timePast]);
 
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <ProgressTimer />
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold text-white">{wpm}</h1>

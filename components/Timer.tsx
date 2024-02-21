@@ -5,8 +5,12 @@ import { useTyperContext } from "./context/typer_context";
 const time = new Date();
 time.setSeconds(time.getSeconds() + 30); // 30 sec timer
 
-const Timer: React.FC<any> = ({ expiryTimestamp = time, isStartedData }) => {
-  // @ts-ignore
+interface TimerProps {
+    expiryTimestamp?: Date;
+    isStartedData?: boolean;
+}
+
+const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) => {
   const {
     seconds,
     minutes,
@@ -83,16 +87,16 @@ const Timer: React.FC<any> = ({ expiryTimestamp = time, isStartedData }) => {
   const renderTimer = (): JSX.Element => {
     return (
       <div style={{ textAlign: "center" }} ref={listener}>
-        <h1>Is started: {isStarted}</h1>
+        {/*<h1>Is started: {isStarted}</h1>*/}
         <div style={{ fontSize: "50px" }}>
-          <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:
+          {/*<span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:*/}
           <span>{seconds}</span>
         </div>
         <p>{isRunning ? "Running" : "Paused"}</p>
         <div className="space-x-4">
-          <button onClick={start}>Start</button>
-          <button onClick={pause}>Pause</button>
-          <button onClick={resume}>Resume</button>
+          {/*<button onClick={start}>Start</button>*/}
+          {/*<button onClick={pause}>Pause</button>*/}
+          {/*<button onClick={resume}>Resume</button>*/}
           <button
             onClick={() => {
               // Restarts to 5 minutes timer

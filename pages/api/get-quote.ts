@@ -8,7 +8,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await axios.get(endpoint);
         const data = response.data;
         res.status(200).json(data);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'An unknown error occurred' });
+        }
     }
 };
