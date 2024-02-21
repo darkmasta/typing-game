@@ -30,12 +30,12 @@ const Typer: React.FC = () => {
     pause,
     resume,
     restart,
-    isStarted,
-    setIsStarted,
+    isGameStarted,
+    setGameStarted,
     timePast,
   } = useTyperContext({});
 
-  const [timer, setTimer] = useState<boolean>(false);
+  const [isTimerSet, setTimer] = useState<boolean>(false);
   const [quote, setQuote] = useState<string>(
     '"The best way to predict the future is to create it."'
   );
@@ -48,7 +48,7 @@ const Typer: React.FC = () => {
 
   const handler = () => {
     console.log("event fired");
-    emitter.emit("gameStarted", { isStarted: true });
+    emitter.emit("gameStarted", { isGameStarted: true });
   };
 
   const handleKeyPress = (e: string): void => {
@@ -61,9 +61,9 @@ const Typer: React.FC = () => {
       return;
     }
 
-    if (!isStarted) {
+    if (!isGameStarted) {
       console.log("focus");
-      setIsStarted(true);
+      setGameStarted(true);
     } else {
       inputRef.current?.focus();
     }
@@ -81,8 +81,8 @@ const Typer: React.FC = () => {
         setQuote(data.content);
         setUserText([]);
         setAuthor(data.author);
-        setIsStarted(false); // to restart the timer
-        // setIsStarted(true);
+        setGameStarted(false); // to restart the timer
+        // setGameStarted(true);
         inputRef.current?.focus();
       });
   };
@@ -91,14 +91,14 @@ const Typer: React.FC = () => {
 
   useEffect(() => {
     if (userText.length > 0) {
-      setIsStarted(true);
-      //console.log("IS_STARTED", isStarted);
+      setGameStarted(true);
+      //console.log("IS_STARTED", isGameStarted);
     }
 
     // callculate words per minute
 
     if (userText.length >= quote.length) {
-      setIsStarted(false);
+      setGameStarted(false);
       setTimer(false);
       finishedButtonRef.current?.focus();
       setTotalTypedCharacters(Math.round(userText.length / 5));
@@ -108,20 +108,30 @@ const Typer: React.FC = () => {
 
   const [totalTypedCharacters, setTotalTypedCharacters] = useState<number>(0);
 
+  // useEffect(() => {
+  //   let allTypedEntries = totalTypedCharacters + userText.length / 5;
+  //
+  //   if (isNaN(wpm)) {
+  //     setWpm(0);
+  //   }
+  //
+  //   console.log(allTypedEntries);
+  //   console.log(timePast);
+  //
+  //   if (timePast > 0) {
+  //     setWpm(Math.round(allTypedEntries / (timePast / 60)));
+  //   }
+  // }, [timePast]);
+
   useEffect(() => {
-    let allTypedEntries = totalTypedCharacters + userText.length / 5;
-
-    if (isNaN(wpm)) {
-      setWpm(0);
+    // Calculate WPM only if the game has started and there are typed characters.
+    if (isGameStarted && userText.length > 0) {
+      const elapsedTimeInMinutes = (30 - seconds) / 60; // Assuming 30 seconds is the total time
+      const wordsTyped = userText.join("").length / 5;
+      setWpm(elapsedTimeInMinutes > 0 ? Math.round(wordsTyped / elapsedTimeInMinutes) : 0);
     }
+  }, [userText, seconds, isGameStarted]);
 
-    console.log(allTypedEntries);
-    console.log(timePast);
-
-    if (timePast > 0) {
-      setWpm(Math.round(allTypedEntries / (timePast / 60)));
-    }
-  }, [timePast]);
 
   return (
     <div className="container mx-auto">
@@ -129,7 +139,7 @@ const Typer: React.FC = () => {
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold text-white">{wpm}</h1>
       </div>
-      <Timer key={123} isStartedData={isStarted} />
+      <Timer key={123} isStartedData={isGameStarted} />
       <div className="text-quote">
         <Quote quote={quote} userText={userText} />
         <div>
@@ -158,10 +168,10 @@ const Typer: React.FC = () => {
           New Quote
         </button>
 
-        {!isStarted && !timer && (
+        {!isGameStarted && !isTimerSet && (
           <button
             onClick={() => {
-              setIsStarted(false);
+              setGameStarted(false);
               setTimer(false);
               fetchNewQuote();
             }}

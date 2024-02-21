@@ -21,15 +21,15 @@ const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) 
     pause,
     resume,
     restart,
-    isStarted,
-    setIsStarted,
+    isGameStarted,
+    setGameStarted,
   }: any = useTyperContext({
-    setIsStarted: function (
+    setGameStarted: function (
       value: boolean | ((prevState: boolean) => boolean)
     ): void {
       throw new Error("Function not implemented.");
     },
-    isStarted: false,
+    isGameStarted: false,
   });
 
   const firstRender = useRef(true);
@@ -39,26 +39,26 @@ const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) 
   });
 
   useEffect(() => {
-    //console.log("isStarted", isStarted);
+    //console.log("isGameStarted", isGameStarted);
     if (firstRender.current) {
       firstRender.current = false;
       pause();
       return;
     }
 
-    if (isStarted) {
+    if (isGameStarted) {
       start();
-      setIsStarted(true);
+      setGameStarted(true);
     }
 
-    if (isStarted) {
+    if (isGameStarted) {
       // start();
       resume();
     } else {
       // start();
       pause();
     }
-  }, [isStarted]);
+  }, [isGameStarted]);
 
   /*
   useEffect(() => {
@@ -76,18 +76,18 @@ const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) 
 
     if (isStartedData) {
       console.log("asd true");
-      console.log(isStarted);
+      console.log(isGameStarted);
       pause();
     }
 
     console.log("EFECT", isStartedData);
-  }, [isStarted]);
+  }, [isGameStarted]);
   */
 
   const renderTimer = (): JSX.Element => {
     return (
       <div style={{ textAlign: "center" }} ref={listener}>
-        {/*<h1>Is started: {isStarted}</h1>*/}
+        {/*<h1>Is started: {isGameStarted}</h1>*/}
         <div style={{ fontSize: "50px" }}>
           {/*<span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:*/}
           <span>{seconds}</span>
