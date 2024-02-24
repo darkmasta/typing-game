@@ -1,55 +1,68 @@
 import React, { useEffect, useState, useRef } from "react";
 import Quote from "./Quote";
 import Timer from "./Timer";
-import { newCustomEventEmitter } from "react-custom-events";
 import useEventListener from "@use-it/event-listener";
-import { useTyperContext } from "./context/typer_context";
-import ProgressTimer from "./ProgressTimer";
+import { useTyperContext } from "../context/TyperContext";
+import ProgressTimer from "./ui/ProgressTimer";
+import {useGameContext} from "../context/GameContext";
 
 const ESCAPE_KEYS = ["27", "Escape", "Enter"];
 
-const Button: React.FC<any> = ({ text, onClickCb }) => {
-  return (
-    <button
-      className="bg-transparent rounded-sm border-2 border-solid border-[paleviletred]"
-      onClick={onClickCb}
-    >
-      {text}
-    </button>
-  );
-};
-
 const Typer: React.FC = () => {
-  const {
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-    isGameStarted,
-    setGameStarted,
-    timePast,
-  } = useTyperContext({});
+  const { seconds, isGameStarted, setGameStarted } = useTyperContext({});
+  const { addLap, toggleModal } = useGameContext();
 
   const [isTimerSet, setTimer] = useState<boolean>(false);
   const [quote, setQuote] = useState<string>(
-    '"The best way to predict the future is to create it."'
+    'The best way to predict the future is to create it.'
   );
   const [author, setAuthor] = useState<string>("Abraham Lincoln");
   const [userText, setUserText] = useState<string[]>([]);
+  const [wpm, setWpm] = useState<number>(0);
+  const [totalTypedCharacters, setTotalTypedCharacters] = useState<number>(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const finishedButtonRef = useRef<HTMLButtonElement>(null);
 
-  const emitter = newCustomEventEmitter();
 
-  const handler = () => {
-    console.log("event fired");
-    emitter.emit("gameStarted", { isGameStarted: true });
-  };
+  useEffect(() => {
+    if (userText.length > 0) {
+      setGameStarted(true);
+      setTotalTypedCharacters(Math.round(userText.length));
+    }
+
+    if (userText.length >= quote.length) {
+      setGameStarted(false);
+      setTimer(false);
+      finishedButtonRef.current?.focus();
+    }
+  }, [userText]);
+
+
+
+  useEffect(() => {
+    const calculateWPM = () => {
+      const wordsTypedWords = totalTypedCharacters / 5;
+      const elapsedTimeInMinutes = (30 - seconds) / 60;
+      return elapsedTimeInMinutes > 0 ? Math.round(wordsTypedWords / elapsedTimeInMinutes) : 0;
+    };
+
+    console.log(isGameStarted, totalTypedCharacters, seconds);
+
+    if (isGameStarted && totalTypedCharacters > 0) {
+      const finalWPM = calculateWPM();
+      console.log(finalWPM);
+      setWpm(finalWPM);
+    }
+  }, [isGameStarted, totalTypedCharacters, seconds]);
+
+  // useEffect(() => {
+  //   if (seconds == 0) {
+  //       setGameStarted(false);
+  //       setTimer(false);
+  //       addLap({wpm, accuracy: 100})
+  //       toggleModal();
+  //   }
+  // }, [seconds]);
 
   const handleKeyPress = (e: string): void => {
     setUserText(e.split(""));
@@ -71,73 +84,24 @@ const Typer: React.FC = () => {
 
   useEventListener("keydown", handleKeyEvent);
 
-  // typescript onChange event handler react
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {};
-
   const fetchNewQuote = (): void => {
     fetch("https://api.quotable.io/random")
-      .then((response) => response.json())
-      .then((data) => {
-        setQuote(data.content);
-        setUserText([]);
-        setAuthor(data.author);
-        setGameStarted(false); // to restart the timer
-        // setGameStarted(true);
-        inputRef.current?.focus();
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          setQuote(data.content);
+          setUserText([]);
+          setAuthor(data.author);
+          setGameStarted(false); // to restart the timer
+          // setGameStarted(true);
+          inputRef.current?.focus();
+        });
   };
-
-  const [wpm, setWpm] = useState<number>(0);
-
-  useEffect(() => {
-    if (userText.length > 0) {
-      setGameStarted(true);
-      //console.log("IS_STARTED", isGameStarted);
-    }
-
-    // callculate words per minute
-
-    if (userText.length >= quote.length) {
-      setGameStarted(false);
-      setTimer(false);
-      finishedButtonRef.current?.focus();
-      setTotalTypedCharacters(Math.round(userText.length / 5));
-      //console.log("game ended");
-    }
-  }, [userText]);
-
-  const [totalTypedCharacters, setTotalTypedCharacters] = useState<number>(0);
-
-  // useEffect(() => {
-  //   let allTypedEntries = totalTypedCharacters + userText.length / 5;
-  //
-  //   if (isNaN(wpm)) {
-  //     setWpm(0);
-  //   }
-  //
-  //   console.log(allTypedEntries);
-  //   console.log(timePast);
-  //
-  //   if (timePast > 0) {
-  //     setWpm(Math.round(allTypedEntries / (timePast / 60)));
-  //   }
-  // }, [timePast]);
-
-  useEffect(() => {
-    // Calculate WPM only if the game has started and there are typed characters.
-    if (isGameStarted && userText.length > 0) {
-      const elapsedTimeInMinutes = (30 - seconds) / 60; // Assuming 30 seconds is the total time
-      const wordsTyped = userText.join("").length / 5;
-      setWpm(elapsedTimeInMinutes > 0 ? Math.round(wordsTyped / elapsedTimeInMinutes) : 0);
-    }
-  }, [userText, seconds, isGameStarted]);
-
 
   return (
     <div className="container mx-auto">
       <ProgressTimer />
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold text-white">{wpm}</h1>
+        <h1 className="text-4xl font-bold text-white">WPM: {wpm}</h1>
       </div>
       <Timer key={123} isStartedData={isGameStarted} />
       <div className="text-quote">
@@ -181,6 +145,14 @@ const Typer: React.FC = () => {
             Finished
           </button>
         )}
+
+        <div>
+          <button onClick={toggleModal} className="px-4 py-2 bg-blue-500 text-white rounded">
+            Show Game Stats
+          </button>
+        </div>
+
+
       </div>
     </div>
   );

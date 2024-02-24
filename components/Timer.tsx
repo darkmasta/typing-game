@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useCustomEventListener } from "react-custom-events";
-import { useTyperContext } from "./context/typer_context";
+import { useTyperContext } from "../context/TyperContext";
 
 const time = new Date();
 time.setSeconds(time.getSeconds() + 30); // 30 sec timer
@@ -13,9 +13,6 @@ interface TimerProps {
 const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) => {
   const {
     seconds,
-    minutes,
-    hours,
-    days,
     isRunning,
     start,
     pause,
@@ -23,17 +20,9 @@ const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) 
     restart,
     isGameStarted,
     setGameStarted,
-  }: any = useTyperContext({
-    setGameStarted: function (
-      value: boolean | ((prevState: boolean) => boolean)
-    ): void {
-      throw new Error("Function not implemented.");
-    },
-    isGameStarted: false,
-  });
+  } = useTyperContext({});
 
   const firstRender = useRef(true);
-
   const listener = useCustomEventListener("gameStarted", (data) => {
     // console.log("EVENT DATA", data);
   });

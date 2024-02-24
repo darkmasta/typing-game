@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import timer from "../components/Timer";
 
 export default function useTyper({}) {
   const [isGameStarted, setGameStarted] = useState<Boolean>(false);

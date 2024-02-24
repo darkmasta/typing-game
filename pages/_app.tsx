@@ -2,12 +2,20 @@ import "../styles/globals.css";
 import "../styles/main.css";
 import type { AppProps } from "next/app";
 
-import { TyperProvider } from "../components/context/typer_context";
+import { TyperProvider } from '../context/TyperContext'
+import { GameProvider } from '../context/GameContext';
+import Modal from '../components/ui/Modal';
+
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <TyperProvider>
-      <Component {...pageProps} />
-    </TyperProvider>
+
+
+    return (
+      <GameProvider>
+        <TyperProvider>
+          <Component {...pageProps} />
+          <Modal />
+        </TyperProvider>
+      </GameProvider>
   );
 }

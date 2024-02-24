@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode } from "react";
-import useTyper from "../../hooks/useTyper";
+import useTyper from "../hooks/useTyper";
 
 const TyperContext = createContext<any>(null);
 
