@@ -6,7 +6,7 @@ import {useTyperContext} from "../../context/TyperContext";
 
 const Modal: React.FC = () => {
     const { laps, isModalOpen, toggleModal } = useGameContext();
-    const {restart} = useTyperContext({});
+    const { restart, setGameStarted } = useTyperContext({});
 
     if (!isModalOpen) return null;
 
@@ -16,11 +16,12 @@ const Modal: React.FC = () => {
         const time = new Date();
         time.setSeconds(time.getSeconds() + 30);
         restart(time);
+        setGameStarted(true);
     }
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={toggleModal}>
-            <div className="relative top-20 mx-auto p-5 border w-[900px] min-h-[500px] shadow-lg rounded-md bg-[#578ee1] flex flex-col justify-between" onClick={(e) => e.stopPropagation()}>
+            <div className="relative top-20 mx-auto p-5 border w-[400px] md:-[w-500px] lg:w-[900px] min-h-[500px] shadow-lg rounded-md bg-[#c69f68] flex flex-col justify-between" onClick={(e) => e.stopPropagation()}>
                 <div className="absolute right-2 top-2">
                     <button
                         onClick={toggleModal}
@@ -35,7 +36,7 @@ const Modal: React.FC = () => {
                     <div className="mt-2">
                         {laps.map((lap, index) => (
                             <p key={index} className="text-lg text-gray-700">
-                                Lap {index + 1}: {lap.wpm} WPM, {lap.accuracy}% Accuracy
+                                Lap {index + 1}: {lap.wpm} WPM, {lap.totalWords} Total Words
                             </p>
                         ))}
                     </div>

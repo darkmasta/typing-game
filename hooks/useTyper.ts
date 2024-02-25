@@ -30,7 +30,7 @@ export default function useTyper({}) {
       setGameStarted(false);
     }
     isGameStarted ? setTimePast(30 - seconds) : setTimePast(0);
-    // console.log(timePast);
+    // console.log("TIME PAST ==== ", timePast);
   }, [seconds]);
 
   return {

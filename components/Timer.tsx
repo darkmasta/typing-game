@@ -79,23 +79,23 @@ const Timer: React.FC<TimerProps> = ({ expiryTimestamp = time, isStartedData }) 
         {/*<h1>Is started: {isGameStarted}</h1>*/}
         <div style={{ fontSize: "50px" }}>
           {/*<span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:*/}
-          <span>{seconds}</span>
+          {/*<span>{seconds}</span>*/}
         </div>
-        <p>{isRunning ? "Running" : "Paused"}</p>
+        {/*<p>{isRunning ? "Running" : "Paused"}</p>*/}
         <div className="space-x-4">
           {/*<button onClick={start}>Start</button>*/}
           {/*<button onClick={pause}>Pause</button>*/}
           {/*<button onClick={resume}>Resume</button>*/}
-          <button
-            onClick={() => {
-              // Restarts to 5 minutes timer
-              const time = new Date();
-              time.setSeconds(time.getSeconds() + 30);
-              restart(time);
-            }}
-          >
-            Restart
-          </button>
+          {/*<button*/}
+          {/*  onClick={() => {*/}
+          {/*    // Restarts to 5 minutes timer*/}
+          {/*    const time = new Date();*/}
+          {/*    time.setSeconds(time.getSeconds() + 30);*/}
+          {/*    restart(time);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Restart*/}
+          {/*</button>*/}
         </div>
       </div>
     );
