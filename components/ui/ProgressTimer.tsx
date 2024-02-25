@@ -7,7 +7,7 @@ const ProgressTimer = () => {
   return (
     <div
       className="absolute top-0 left-0 h-4 w-4 bg-amber-600"
-      style={{ width: `${(parseInt(String(30 - parseInt(seconds)))/ 29) * 100}%` }}
+      style={{ width: `${(parseInt(String(30 - parseInt(seconds) - 1))/ 29) * 100}%` }}
     />
   );
 };
